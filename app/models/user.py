@@ -1,5 +1,6 @@
 from sqlalchemy import Column, String, Boolean, DateTime
-from app.db.base import Base
+from sqlalchemy.orm import relationship
+from app.db.base_class import Base
 from datetime import datetime
 import uuid
 
@@ -11,3 +12,5 @@ class User(Base):
     push_token = Column(String(255), nullable=False)
     is_guest = Column(Boolean, default=True)
     created_at = Column(DateTime, default=datetime.utcnow)
+
+    matches = relationship("Match", back_populates="user")

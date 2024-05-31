@@ -1,6 +1,6 @@
 from sqlalchemy import Column, String, Integer, Boolean, DateTime, ForeignKey
 from sqlalchemy.orm import relationship
-from app.db.base import Base
+from app.db.base_class import Base
 from datetime import datetime
 import uuid
 
@@ -17,5 +17,7 @@ class Match(Base):
     date = Column(DateTime, default=datetime.utcnow)
     is_favourite = Column(Boolean, default=False)
     current_time = Column(Integer, nullable=False)
+    user_id = Column(String(36), ForeignKey('users.id'))
 
-    logs = relationship("Log", back_populates="match")
+    user = relationship("User", back_populates="matches")
+    logs = relationship("Log", back_populates="match", cascade="all, delete-orphan")

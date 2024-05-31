@@ -15,13 +15,14 @@ class MatchBase(BaseModel):
     current_time: int
 
 class MatchCreate(MatchBase):
-    pass
+    user_id: str  # Add user_id to the creation schema
 
 class MatchUpdate(MatchBase):
     logs: Optional[List[Log]] = []
 
 class MatchInDBBase(MatchBase):
     id: str
+    user_id: str  # Add user_id to the database schema
 
     class Config:
         orm_mode = True

@@ -1,7 +1,15 @@
 from sqlalchemy import Column, String, Integer, Float, ForeignKey
 from sqlalchemy.orm import relationship
-from app.db.base import Base
+from app.db.base_class import Base
 import uuid
+from enum import Enum
+
+class LogType(str, Enum):
+    RED = "Red Card"
+    YELLOW = "Yellow Card"
+    PENALTY = "Penalty"
+    THROW = "Throw in"
+    GOAL = "Goal"
 
 class Log(Base):
     __tablename__ = "logs"

@@ -8,6 +8,9 @@ def get_match(db: Session, match_id: str):
 def get_matches(db: Session, skip: int = 0, limit: int = 10):
     return db.query(Match).offset(skip).limit(limit).all()
 
+def get_user_matches(db: Session, user_id: str, skip: int = 0, limit: int = 10):
+    return db.query(Match).filter(Match.user_id == user_id).offset(skip).limit(limit).all()
+
 def create_match(db: Session, match: MatchCreate):
     db_match = Match(**match.dict())
     db.add(db_match)

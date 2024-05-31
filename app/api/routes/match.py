@@ -24,6 +24,11 @@ def read_matches(skip: int = 0, limit: int = 10, db: Session = Depends(get_db)):
     matches = crud_match.get_matches(db, skip=skip, limit=limit)
     return matches
 
+@router.get("/user/{user_id}", response_model=List[Match])
+def read_user_matches(user_id: str, skip: int = 0, limit: int = 10, db: Session = Depends(get_db)):
+    matches = crud_match.get_user_matches(db, user_id=user_id, skip=skip, limit=limit)
+    return matches
+
 @router.put("/{match_id}", response_model=Match)
 def update_match(match_id: str, match: MatchUpdate, db: Session = Depends(get_db)):
     db_match = crud_match.update_match(db, match_id=match_id, match=match)
