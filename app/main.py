@@ -9,4 +9,4 @@ app.include_router(log.router, prefix="/logs", tags=["logs"])
 
 @app.get("/")
 def read_root():
-    return {"message": "Welcome to MyBookieBackend"}
+    return {"message": "I serve the soviet union 🇪🇺"}
