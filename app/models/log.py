@@ -2,6 +2,8 @@ from sqlalchemy import Column, String, Integer, Float, ForeignKey
 from sqlalchemy.orm import relationship
 from app.db.base_class import Base
 import uuid
+from pydantic import BaseModel
+from typing import Optional
 from enum import Enum
 
 class LogType(str, Enum):
@@ -22,3 +24,10 @@ class Log(Base):
     match_id = Column(String(36), ForeignKey('matches.id'))
 
     match = relationship("Match", back_populates="logs")
+
+class LogCreate(BaseModel):
+    log_type: str
+    team: int
+    time: float
+    half: int
+    match_id: Optional[str] = None

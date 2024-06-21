@@ -2,6 +2,8 @@ from sqlalchemy import Column, String, Integer, Boolean, DateTime, ForeignKey
 from sqlalchemy.orm import relationship
 from app.db.base_class import Base
 from datetime import datetime
+from typing import List, Optional
+from pydantic import BaseModel
 import uuid
 
 class Match(Base):
@@ -21,3 +23,17 @@ class Match(Base):
 
     user = relationship("User", back_populates="matches")
     logs = relationship("Log", back_populates="match", cascade="all, delete-orphan")
+
+
+class MatchCreate(BaseModel):
+    team1: str
+    team2: str
+    team1_name: str
+    team2_name: str
+    halves: int
+    half_times: int
+    date: Optional[datetime] = None
+    is_favourite: Optional[bool] = None
+    current_time: int
+    user_id: Optional[str] = None
+    logs: Optional[List[LogCreate]] = None
