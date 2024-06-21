@@ -1,6 +1,13 @@
 from pydantic import BaseModel
 from typing import Optional
-from app.models.log import LogType
+from enum import Enum
+
+class LogType(str, Enum):
+    RED = "Red Card"
+    YELLOW = "Yellow Card"
+    PENALTY = "Penalty"
+    THROW = "Throw in"
+    GOAL = "Goal"
 
 class LogBase(BaseModel):
     log_type: LogType
@@ -9,16 +16,17 @@ class LogBase(BaseModel):
     half: int
 
 class LogCreate(LogBase):
-    match_id: str
+    pass
 
 class LogUpdate(LogBase):
     pass
 
 class LogInDBBase(LogBase):
     id: str
+    match_id: Optional[str] = None
 
     class Config:
-        from_attributes = True
+        orm_mode = True
 
 class Log(LogInDBBase):
     pass

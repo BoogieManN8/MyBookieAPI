@@ -1,7 +1,7 @@
 from pydantic import BaseModel
 from datetime import datetime
 from typing import List, Optional
-from app.schemas.log import Log
+from app.schemas.log import LogCreate
 
 class MatchBase(BaseModel):
     team1: str
@@ -15,20 +15,21 @@ class MatchBase(BaseModel):
     current_time: int
 
 class MatchCreate(MatchBase):
-    user_id: str  # Add user_id to the creation schema
+    user_id: str
+    logs: Optional[List[LogCreate]] = []
 
 class MatchUpdate(MatchBase):
-    logs: Optional[List[Log]] = []
+    logs: Optional[List[LogCreate]] = []
 
 class MatchInDBBase(MatchBase):
     id: str
-    user_id: str  # Add user_id to the database schema
+    user_id: str
 
     class Config:
         orm_mode = True
 
 class Match(MatchInDBBase):
-    logs: List[Log]
+    logs: List[LogCreate]
 
 class MatchInDB(MatchInDBBase):
     pass
