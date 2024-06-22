@@ -42,9 +42,12 @@ def update_match(db: Session, match_id: str, match: MatchUpdate):
     db_match = get_match(db, match_id)
     if db_match is None:
         return None
-    update_data = match.dict(exclude_unset=True)
+    
+    update_data = match.dict(exclude_unset=True, exclude={"logs"})
+    
     for key, value in update_data.items():
         setattr(db_match, key, value)
+    
     db.commit()
     db.refresh(db_match)
     return db_match

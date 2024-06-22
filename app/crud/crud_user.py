@@ -3,7 +3,11 @@ from app.models.user import User
 from app.schemas.user import UserCreate, UserUpdate
 
 def get_user(db: Session, user_id: str):
-    return db.query(User).filter(User.id == user_id).first()
+    return db.query(User).filter(
+        (User.id == user_id) | 
+        (User.push_token == user_id) | 
+        (User.apple_token == user_id)
+    ).first()
 
 def get_users(db: Session, skip: int = 0, limit: int = 10):
     return db.query(User).offset(skip).limit(limit).all()
